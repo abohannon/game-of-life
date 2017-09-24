@@ -10,7 +10,7 @@ const createGridItemStyles = props => ({
     margin: '1px',
     cursor: 'pointer',
     outline: 'none',
-    backgroundColor: props.active ? 'red' : '',
+    backgroundColor: props.alive ? 'red' : '',
     ':hover': {
       backgroundColor: 'red',
     },
@@ -19,21 +19,29 @@ const createGridItemStyles = props => ({
 
 class GridItem extends Component {
   static propTypes = {
-
+    index: PropTypes.number.isRequired,
+    updateGrid: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      active: false,
+      alive: false,
+      cell: '',
     };
+  }
+
+  handleUpdate = (cell, state) => {
+    this.props.updateGrid(cell, state);
   }
 
   handleChange = () => {
     this.setState({
-      active: !this.state.active,
+      alive: !this.state.alive,
+      cell: this.props.index,
     });
+    this.handleUpdate(this.props.index, this.state.alive);
   }
 
   render() {

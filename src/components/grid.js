@@ -24,6 +24,31 @@ class Grid extends Component {
     gridSize: 800,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      aliveCells: [],
+    };
+  }
+
+  updateGrid = (cell, state) => {
+    const aliveCells = [...this.state.aliveCells, cell];
+    if (!state) {
+      this.setState({
+        aliveCells,
+      });
+    }
+    if (state) {
+      const updatedCells = [...this.state.aliveCells];
+      updatedCells.pop();
+
+      this.setState({
+        aliveCells: updatedCells,
+      });
+    }
+  }
+
   render() {
     const {
       gridWrapper,
@@ -37,7 +62,7 @@ class Grid extends Component {
 
     for (let i = 1; i <= gridSize; i += 1) {
       grid.push(
-        <GridItem key={i} />,
+        <GridItem key={i} index={i} updateGrid={this.updateGrid} />,
       );
     }
 
