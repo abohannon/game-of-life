@@ -12,7 +12,7 @@ const createControlsStyles = () => ({
     width: 760,
   },
   button: {
-    marginRight: '4px',
+    marginRight: '8px',
   },
 });
 

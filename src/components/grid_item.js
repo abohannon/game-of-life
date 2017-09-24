@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import PropTypes from 'prop-types';
 
-const createGridItemStyles = () => ({
+const createGridItemStyles = props => ({
   gridItem: {
     height: '15px',
     width: '15px',
     border: '1px solid rgba(0, 0, 0, 0.3)',
     margin: '1px',
     cursor: 'pointer',
+    outline: 'none',
+    backgroundColor: props.active ? 'red' : '',
     ':hover': {
       backgroundColor: 'red',
     },
@@ -37,7 +39,7 @@ class GridItem extends Component {
   render() {
     const {
       gridItem,
-    } = createGridItemStyles();
+    } = createGridItemStyles(this.state);
 
     return (
       <div style={gridItem} onClick={this.handleChange} role="button" tabIndex="0" />
