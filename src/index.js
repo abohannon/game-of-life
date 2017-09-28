@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 import './index.css';
 
 import Grid from './components/grid';
@@ -12,6 +13,9 @@ const createAppStyles = () => ({
     flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'center',
+  },
+  appBar: {
+    fontFamily: '"Work Sans", sans-serif',
   },
 });
 
@@ -35,12 +39,17 @@ class App extends Component {
   render() {
     const {
       appWrapper,
+      appBar,
     } = createAppStyles();
 
     return (
       <MuiThemeProvider>
         <div style={appWrapper}>
-          <h1>The Game Of Life</h1>
+          <AppBar
+            title="Conway's Game of Life"
+            showMenuIconButton={false}
+            style={appBar}
+          />
           <Grid updateGenerations={this.updateGenerations} />
           <Controls generations={this.state.generations} />
         </div>

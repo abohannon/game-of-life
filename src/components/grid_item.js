@@ -10,9 +10,9 @@ const createGridItemStyles = props => ({
     margin: '1px',
     cursor: 'pointer',
     outline: 'none',
-    backgroundColor: props.alive ? 'red' : '',
+    backgroundColor: props.alive ? '#EF5350' : '',
     ':hover': {
-      backgroundColor: 'red',
+      backgroundColor: '#EF5350',
     },
   },
 });
@@ -21,6 +21,8 @@ class GridItem extends Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
     trackCells: PropTypes.func.isRequired,
+    updateGenerations: PropTypes.func.isRequired,
+    aliveCells: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -29,7 +31,35 @@ class GridItem extends Component {
     this.state = {
       alive: false,
       cell: '',
+      neighbors: 0,
     };
+  }
+
+  detectNeighbors = (aliveCells, cell) => {
+    const neighbors = [
+      cell + 1,
+      cell - 1,
+      cell - 40,
+      cell + 40,
+      (cell - 40) + 1,
+      (cell - 40) - 1,
+      (cell + 40) + 1,
+      (cell + 40) - 1,
+    ];
+
+    let count = 0;
+
+    for (let i = 0; i < aliveCells.length; i++) {
+      for (let k = 0; k < neighbors.length; k++) {
+        if (aliveCells[i] === neighbors[k]) {
+          count += 1;
+        }
+      }
+    }
+
+    this.setState({
+      neighbors: count,
+    });
   }
 
   handleUpdate = (cell, state) => {
@@ -43,6 +73,7 @@ class GridItem extends Component {
     });
     this.handleUpdate(this.props.index, this.state.alive);
     this.props.updateGenerations();
+    this.detectNeighbors(this.props.aliveCells, this.props.index);
   }
 
   render() {

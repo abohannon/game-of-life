@@ -18,6 +18,7 @@ const createGridStyles = () => ({
 class Grid extends Component {
   static propTypes = {
     gridSize: PropTypes.number.isRequired,
+    updateGenerations: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -67,6 +68,7 @@ class Grid extends Component {
           key={i}
           index={i}
           trackCells={this.trackCells}
+          aliveCells={this.state.aliveCells}
           updateGenerations={updateGenerations}
         />,
       );
