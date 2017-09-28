@@ -35,6 +35,26 @@ class GridItem extends Component {
     };
   }
 
+  componentWillMount = () => {
+    console.log('gridItem is mounting...');
+  }
+
+  componentDidMount = () => {
+    console.log('gridItem has mounted!');
+  }
+
+  componentWillReceiveProps = () => {
+    console.log('gridItem received props.');
+    this.detectNeighbors(this.props.aliveCells, this.props.index);
+
+    if (this.state.neighbors > 3) {
+      this.setState({
+        alive: false,
+      });
+    }
+  }
+
+  // TODO: Need to work on counting. How to subtract neighbors when they disappear?
   detectNeighbors = (aliveCells, cell) => {
     const neighbors = [
       cell + 1,
@@ -73,7 +93,6 @@ class GridItem extends Component {
     });
     this.handleUpdate(this.props.index, this.state.alive);
     this.props.updateGenerations();
-    this.detectNeighbors(this.props.aliveCells, this.props.index);
   }
 
   render() {
