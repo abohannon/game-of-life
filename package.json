@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "create-react-app": "^1.4.1",
     "eslint": "^4.7.2",
     "eslint-config-airbnb": "^15.1.0",
     "material-ui": "^0.19.2",

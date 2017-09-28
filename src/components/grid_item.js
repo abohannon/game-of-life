@@ -20,7 +20,7 @@ const createGridItemStyles = props => ({
 class GridItem extends Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
-    updateGrid: PropTypes.func.isRequired,
+    trackCells: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -33,7 +33,7 @@ class GridItem extends Component {
   }
 
   handleUpdate = (cell, state) => {
-    this.props.updateGrid(cell, state);
+    this.props.trackCells(cell, state);
   }
 
   handleChange = () => {
@@ -42,6 +42,7 @@ class GridItem extends Component {
       cell: this.props.index,
     });
     this.handleUpdate(this.props.index, this.state.alive);
+    this.props.updateGenerations();
   }
 
   render() {

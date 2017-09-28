@@ -21,9 +21,15 @@ class App extends Component {
 
     this.state = {
 
-      gameOn: false,
+      generations: 0,
 
     };
+  }
+
+  updateGenerations = () => {
+    this.setState({
+      generations: this.state.generations += 1,
+    });
   }
 
   render() {
@@ -31,13 +37,12 @@ class App extends Component {
       appWrapper,
     } = createAppStyles();
 
-
     return (
       <MuiThemeProvider>
         <div style={appWrapper}>
           <h1>The Game Of Life</h1>
-          <Grid />
-          <Controls />
+          <Grid updateGenerations={this.updateGenerations} />
+          <Controls generations={this.state.generations} />
         </div>
       </MuiThemeProvider>
     );

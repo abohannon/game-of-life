@@ -32,7 +32,7 @@ class Grid extends Component {
     };
   }
 
-  updateGrid = (cell, state) => {
+  trackCells = (cell, state) => {
     const aliveCells = [...this.state.aliveCells, cell];
     if (!state) {
       this.setState({
@@ -56,13 +56,19 @@ class Grid extends Component {
 
     const {
       gridSize,
+      updateGenerations,
     } = this.props;
 
     const grid = [];
 
     for (let i = 1; i <= gridSize; i += 1) {
       grid.push(
-        <GridItem key={i} index={i} updateGrid={this.updateGrid} />,
+        <GridItem
+          key={i}
+          index={i}
+          trackCells={this.trackCells}
+          updateGenerations={updateGenerations}
+        />,
       );
     }
 

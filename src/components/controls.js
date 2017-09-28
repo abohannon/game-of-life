@@ -17,19 +17,23 @@ const createControlsStyles = () => ({
 });
 
 class Controls extends Component {
-  static propTypes = {
-    generations: PropTypes.number.isRequired,
-  };
+  constructor(props) {
+    super(props);
 
-  static defaultProps = {
-    generations: 800,
-  };
-
+    this.state = {
+      dummy: 0,
+    };
+  }
   render() {
     const {
       controlsWrapper,
       button,
     } = createControlsStyles();
+
+    const {
+      generations,
+    } = this.props;
+
     return (
       <div style={controlsWrapper}>
         <div>
@@ -38,7 +42,7 @@ class Controls extends Component {
           <RaisedButton label="RESET" style={button} />
         </div>
         <div>
-          Generations: {this.props.generations}
+          Generations: {generations}
         </div>
       </div>
     );
