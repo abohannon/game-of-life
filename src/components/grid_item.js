@@ -38,15 +38,18 @@ class GridItem extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    // if (this.props.start) {
     this.detectNeighbors(nextProps.aliveCells, nextProps.index);
-    // }
+    this.toggleAlive();
+  }
 
-    // if (this.state.neighbors > 3) {
-    //   this.setState({
-    //     alive: false,
-    //   });
-    // }
+  toggleAlive = () => {
+    if (this.props.start) {
+      if (this.state.neighbors > 3) {
+        this.setState({
+          alive: false,
+        });
+      }
+    }
   }
 
   detectNeighbors = (aliveCells, cell) => {
@@ -70,17 +73,17 @@ class GridItem extends Component {
     });
   }
 
-  handleUpdate = (cell, state) => {
-    this.props.trackCells(cell, state);
-  }
-
   handleChange = () => {
     this.setState({
       alive: !this.state.alive,
       cell: this.props.index,
-    });
-    this.handleUpdate(this.props.index, this.state.alive);
+    }, this.handleUpdate);
+
     this.props.updateGenerations();
+  }
+
+  handleUpdate = () => {
+    this.props.trackCells(this.props.index, this.state.alive);
   }
 
   render() {
