@@ -23,6 +23,7 @@ class GridItem extends Component {
     trackCells: PropTypes.func.isRequired,
     updateGenerations: PropTypes.func.isRequired,
     aliveCells: PropTypes.array.isRequired,
+    start: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -35,17 +36,11 @@ class GridItem extends Component {
     };
   }
 
-  componentWillMount = () => {
-    console.log('gridItem is mounting...');
-  }
-
-  componentDidMount = () => {
-    console.log('gridItem has mounted!');
-  }
-
   componentWillReceiveProps = () => {
     console.log('gridItem received props.');
-    this.detectNeighbors(this.props.aliveCells, this.props.index);
+    if (this.props.start) {
+      this.detectNeighbors(this.props.aliveCells, this.props.index);
+    }
 
     if (this.state.neighbors > 3) {
       this.setState({
@@ -67,18 +62,11 @@ class GridItem extends Component {
       (cell + 40) - 1,
     ];
 
-    let count = 0;
-
-    for (let i = 0; i < aliveCells.length; i++) {
-      for (let k = 0; k < neighbors.length; k++) {
-        if (aliveCells[i] === neighbors[k]) {
-          count += 1;
-        }
-      }
-    }
+    // TODO: kind of working. Seems one step behind.
+    const currentNeighbors = aliveCells.filter(aliveCell => neighbors.includes(aliveCell));
 
     this.setState({
-      neighbors: count,
+      neighbors: currentNeighbors,
     });
   }
 

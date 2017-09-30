@@ -26,6 +26,7 @@ class App extends Component {
     this.state = {
 
       generations: 0,
+      start: false,
 
     };
   }
@@ -33,6 +34,18 @@ class App extends Component {
   updateGenerations = () => {
     this.setState({
       generations: this.state.generations += 1,
+    });
+  }
+
+  startGame = () => {
+    this.setState({
+      start: true,
+    });
+  }
+
+  pauseGame = () => {
+    this.setState({
+      start: false,
     });
   }
 
@@ -50,8 +63,15 @@ class App extends Component {
             showMenuIconButton={false}
             style={appBar}
           />
-          <Grid updateGenerations={this.updateGenerations} />
-          <Controls generations={this.state.generations} />
+          <Grid
+            updateGenerations={this.updateGenerations}
+            start={this.state.start}
+          />
+          <Controls
+            generations={this.state.generations}
+            startGame={this.startGame}
+            pauseGame={this.pauseGame}
+          />
         </div>
       </MuiThemeProvider>
     );

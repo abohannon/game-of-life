@@ -19,6 +19,7 @@ class Grid extends Component {
   static propTypes = {
     gridSize: PropTypes.number.isRequired,
     updateGenerations: PropTypes.func.isRequired,
+    start: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -59,6 +60,7 @@ class Grid extends Component {
     const {
       gridSize,
       updateGenerations,
+      start,
     } = this.props;
 
     const grid = [];
@@ -71,6 +73,7 @@ class Grid extends Component {
           trackCells={this.trackCells}
           aliveCells={this.state.aliveCells}
           updateGenerations={updateGenerations}
+          start={start}
         />,
       );
     }

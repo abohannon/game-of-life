@@ -17,6 +17,12 @@ const createControlsStyles = () => ({
 });
 
 class Controls extends Component {
+  static propTypes = {
+    generations: PropTypes.number.isRequired,
+    startGame: PropTypes.func.isRequired,
+    pauseGame: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -32,13 +38,15 @@ class Controls extends Component {
 
     const {
       generations,
+      startGame,
+      pauseGame,
     } = this.props;
 
     return (
       <div style={controlsWrapper}>
         <div>
-          <RaisedButton label="START" style={button} />
-          <RaisedButton label="PAUSE" style={button} />
+          <RaisedButton label="START" style={button} onClick={startGame} />
+          <RaisedButton label="PAUSE" style={button} onClick={pauseGame} />
           <RaisedButton label="RESET" style={button} />
         </div>
         <div>
