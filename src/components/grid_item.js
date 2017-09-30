@@ -33,23 +33,22 @@ class GridItem extends Component {
       alive: false,
       cell: '',
       neighbors: 0,
+      neighborLocations: [],
     };
   }
 
-  componentWillReceiveProps = () => {
-    console.log('gridItem received props.');
-    if (this.props.start) {
-      this.detectNeighbors(this.props.aliveCells, this.props.index);
-    }
+  componentWillReceiveProps = (nextProps) => {
+    // if (this.props.start) {
+    this.detectNeighbors(nextProps.aliveCells, nextProps.index);
+    // }
 
-    if (this.state.neighbors > 3) {
-      this.setState({
-        alive: false,
-      });
-    }
+    // if (this.state.neighbors > 3) {
+    //   this.setState({
+    //     alive: false,
+    //   });
+    // }
   }
 
-  // TODO: Need to work on counting. How to subtract neighbors when they disappear?
   detectNeighbors = (aliveCells, cell) => {
     const neighbors = [
       cell + 1,
@@ -66,7 +65,8 @@ class GridItem extends Component {
     const currentNeighbors = aliveCells.filter(aliveCell => neighbors.includes(aliveCell));
 
     this.setState({
-      neighbors: currentNeighbors,
+      neighbors: currentNeighbors.length,
+      neighborLocations: currentNeighbors,
     });
   }
 
