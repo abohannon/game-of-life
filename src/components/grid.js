@@ -35,23 +35,17 @@ class Grid extends Component {
   }
 
   trackCells = (cell, state) => {
-    console.log('grid - state from gridItem:', state);
+    const aliveCells = [...this.state.aliveCells];
     if (state) {
-      const aliveCells = [...this.state.aliveCells, cell];
-      this.setState({
-        aliveCells,
-      });
-    } // TODO: Still working on removing dead cells from aliveCells array.
-    if (!state) {
-      const updatedCells = [...this.state.aliveCells];
-      const deadCell = updatedCells.indexOf(cell);
-      console.log('deadCell', deadCell);
-      updatedCells.slice(deadCell, 1);
-
-      this.setState({
-        aliveCells: updatedCells,
-      });
+      aliveCells.push(cell);
     }
+    if (!state) {
+      const deadCell = aliveCells.indexOf(cell);
+      aliveCells.splice(deadCell, 1);
+    }
+    this.setState({
+      aliveCells,
+    });
   };
 
   render() {
