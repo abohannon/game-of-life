@@ -44,13 +44,28 @@ class GridItem extends Component {
 
   toggleAlive = () => {
     if (this.props.start) {
-      if (this.state.neighbors > 3) {
-        this.setState({
-          alive: false,
-        });
+      if (this.state.alive === true) {
+        if (this.state.neighbors < 2 || this.state.neighbors > 3) {
+          this.setState({
+            alive: false,
+          });
+        }
+        if (this.state.neighbors > 2 && this.state.neighbors <= 3) {
+          this.setState({
+            alive: true,
+          });
+        }
+      }
+      if (this.state.alive === false) {
+        if (this.state.neighbors === 3) {
+          this.setState({
+            alive: true,
+          });
+        }
       }
     }
   }
+
 
   detectNeighbors = (aliveCells, cell) => {
     const neighbors = [
@@ -64,7 +79,6 @@ class GridItem extends Component {
       (cell + 40) - 1,
     ];
 
-    // TODO: kind of working. Seems one step behind.
     const currentNeighbors = aliveCells.filter(aliveCell => neighbors.includes(aliveCell));
 
     this.setState({
@@ -77,13 +91,10 @@ class GridItem extends Component {
     this.setState({
       alive: !this.state.alive,
       cell: this.props.index,
-    }, this.handleUpdate);
-
-    this.props.updateGenerations();
-  }
-
-  handleUpdate = () => {
-    this.props.trackCells(this.props.index, this.state.alive);
+    }, () => {
+      this.props.trackCells(this.props.index, this.state.alive);
+      this.props.updateGenerations();
+    });
   }
 
   render() {

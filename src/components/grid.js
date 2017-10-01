@@ -35,6 +35,7 @@ class Grid extends Component {
   }
 
   trackCells = (cell, state) => {
+    console.log(state);
     const aliveCells = [...this.state.aliveCells];
     if (state) {
       aliveCells.push(cell);
