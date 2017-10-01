@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import PropTypes from 'prop-types';
 
-const createGridItemStyles = props => ({
+const createGridItemStyles = () => ({
   gridItem: {
     height: '15px',
     width: '15px',
@@ -10,80 +10,20 @@ const createGridItemStyles = props => ({
     margin: '1px',
     cursor: 'pointer',
     outline: 'none',
-    backgroundColor: props.alive ? '#EF5350' : '',
-    ':hover': {
-      backgroundColor: '#EF5350',
-    },
   },
 });
 
 class GridItem extends Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
-    trackCells: PropTypes.func.isRequired,
-    updateGenerations: PropTypes.func.isRequired,
-    aliveCells: PropTypes.array.isRequired,
-    start: PropTypes.bool.isRequired,
+    // updateGenerations: PropTypes.func.isRequired,
+    // start: PropTypes.bool.isRequired,
+    selectCell: PropTypes.func.isRequired,
+    cellClass: PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      alive: false,
-      cell: '',
-      neighbors: 0,
-      neighborLocations: [],
-    };
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    this.detectNeighbors(nextProps.aliveCells, nextProps.index);
-    this.toggleAlive();
-  }
-
-  toggleAlive = () => {
-    if (this.props.start) {
-      if (this.state.neighbors > 3) {
-        this.setState({
-          alive: false,
-        });
-      }
-    }
-  }
-
-  detectNeighbors = (aliveCells, cell) => {
-    const neighbors = [
-      cell + 1,
-      cell - 1,
-      cell - 40,
-      cell + 40,
-      (cell - 40) + 1,
-      (cell - 40) - 1,
-      (cell + 40) + 1,
-      (cell + 40) - 1,
-    ];
-
-    // TODO: kind of working. Seems one step behind.
-    const currentNeighbors = aliveCells.filter(aliveCell => neighbors.includes(aliveCell));
-
-    this.setState({
-      neighbors: currentNeighbors.length,
-      neighborLocations: currentNeighbors,
-    });
-  }
-
-  handleChange = () => {
-    this.setState({
-      alive: !this.state.alive,
-      cell: this.props.index,
-    }, this.handleUpdate);
-
-    this.props.updateGenerations();
-  }
-
-  handleUpdate = () => {
-    this.props.trackCells(this.props.index, this.state.alive);
+  selectCell = () => {
+    this.props.selectCell(this.props.index);
   }
 
   render() {
@@ -92,7 +32,7 @@ class GridItem extends Component {
     } = createGridItemStyles(this.state);
 
     return (
-      <div style={gridItem} onClick={this.handleChange} role="button" tabIndex="0" />
+      <div className={this.props.cellClass} style={gridItem} onClick={this.selectCell} role="button" tabIndex="0" />
     );
   }
 }

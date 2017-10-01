@@ -23,12 +23,25 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.gridSize = 800;
+
     this.state = {
 
       generations: 0,
       start: false,
+      aliveCells: [],
+      grid: Array(this.gridSize).fill(false),
 
     };
+  }
+
+  selectCell = (index) => {
+    console.log('cell selected:', index);
+    const gridCopy = [...this.state.grid];
+    gridCopy[index] = !gridCopy[index];
+    this.setState({
+      grid: gridCopy,
+    });
   }
 
   updateGenerations = () => {
@@ -64,6 +77,9 @@ class App extends Component {
             style={appBar}
           />
           <Grid
+            grid={this.state.grid}
+            selectCell={this.selectCell}
+            gridSize={this.gridSize}
             updateGenerations={this.updateGenerations}
             start={this.state.start}
           />
