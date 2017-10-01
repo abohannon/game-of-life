@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import PropTypes from 'prop-types';
 
-import GridItem from './grid_item';
-
 const createGridStyles = () => ({
   gridWrapper: {
     display: 'flex',
@@ -12,6 +10,14 @@ const createGridStyles = () => ({
     alignSelf: 'center',
     width: '760px',
     margin: '24px',
+  },
+  gridItem: {
+    height: '15px',
+    width: '15px',
+    border: '1px solid rgba(0, 0, 0, 0.3)',
+    margin: '1px',
+    cursor: 'pointer',
+    outline: 'none',
   },
 });
 
@@ -22,16 +28,16 @@ class Grid extends Component {
     start: PropTypes.bool.isRequired,
   };
 
-  static defaultProps = {
-    gridSize: 800,
-  };
-
   constructor(props) {
     super(props);
 
     this.state = {
       aliveCells: [],
     };
+  }
+
+  componentWillReceiveProps = () => {
+
   }
 
   trackCells = (cell, state) => {
@@ -52,26 +58,20 @@ class Grid extends Component {
   render() {
     const {
       gridWrapper,
+      gridItem,
     } = createGridStyles();
 
     const {
       gridSize,
-      updateGenerations,
-      start,
+      // updateGenerations,
+      // start,
     } = this.props;
 
     const grid = [];
 
     for (let i = 1; i <= gridSize; i += 1) {
       grid.push(
-        <GridItem
-          key={i}
-          index={i}
-          trackCells={this.trackCells}
-          aliveCells={this.state.aliveCells}
-          updateGenerations={updateGenerations}
-          start={start}
-        />,
+        <div style={gridItem} onClick={this.handleChange} role="button" tabIndex="0" />,
       );
     }
 

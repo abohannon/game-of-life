@@ -23,12 +23,21 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.gridSize = 800;
+
     this.state = {
 
       generations: 0,
       start: false,
+      grid: [],
 
     };
+  }
+
+  updateGrid = (grid) => {
+    this.setState({
+      grid,
+    });
   }
 
   updateGenerations = () => {
@@ -64,6 +73,7 @@ class App extends Component {
             style={appBar}
           />
           <Grid
+            gridSize={this.gridSize}
             updateGenerations={this.updateGenerations}
             start={this.state.start}
           />
