@@ -20,6 +20,8 @@ class GridItem extends Component {
     cellClass: PropTypes.string.isRequired,
   };
 
+  shouldComponentUpdate = (nextProps, nextState) => nextProps.cellClass !== this.props.cellClass
+
   selectCell = () => {
     this.props.selectCell(this.props.index);
   }

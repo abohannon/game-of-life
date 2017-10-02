@@ -27,11 +27,9 @@ class App extends Component {
     this.intervalID = '';
 
     this.state = {
-
       generations: 0,
       aliveCells: [],
       grid: Array(this.gridSize).fill(false),
-
     };
   }
 
@@ -61,7 +59,7 @@ class App extends Component {
 
   startGame = () => {
     clearInterval(this.intervalID);
-    this.intervalID = setInterval(this.analyzeNeighbors, 150);
+    this.intervalID = setInterval(this.analyzeNeighbors, 100);
   }
 
   pauseGame = () => {

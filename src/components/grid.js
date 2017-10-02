@@ -19,7 +19,6 @@ class Grid extends Component {
   static propTypes = {
     grid: PropTypes.array.isRequired,
     gridSize: PropTypes.number.isRequired,
-    start: PropTypes.bool.isRequired,
     selectCell: PropTypes.func.isRequired,
   };
 
@@ -30,7 +29,6 @@ class Grid extends Component {
 
     const {
       gridSize,
-      start,
       selectCell,
     } = this.props;
 
@@ -45,7 +43,6 @@ class Grid extends Component {
           key={i}
           index={i}
           trackCells={this.trackCells}
-          start={start}
           selectCell={selectCell}
         />,
       );
