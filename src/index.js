@@ -24,19 +24,23 @@ class App extends Component {
     super(props);
 
     this.gridSize = 800;
+    this.intervalID = '';
 
     this.state = {
 
       generations: 0,
-      start: false,
       aliveCells: [],
       grid: Array(this.gridSize).fill(false),
 
     };
   }
 
+  componentDidMount = () => {
+    this.randomCells();
+    this.startGame();
+  }
+
   selectCell = (index) => {
-    console.log('cell selected:', index);
     const gridCopy = [...this.state.grid];
     gridCopy[index] = !gridCopy[index];
     this.setState({
@@ -44,21 +48,63 @@ class App extends Component {
     });
   }
 
-  updateGenerations = () => {
+  randomCells = () => {
+    const gridCopy = [...this.state.grid];
+    for (let i = 0; i < 200; i++) {
+      const rand = Math.floor(Math.random() * 800);
+      gridCopy[rand] = true;
+    }
     this.setState({
-      generations: this.state.generations += 1,
+      grid: gridCopy,
     });
   }
 
   startGame = () => {
-    this.setState({
-      start: true,
-    });
+    clearInterval(this.intervalID);
+    this.intervalID = setInterval(this.analyzeNeighbors, 150);
   }
 
   pauseGame = () => {
     this.setState({
       start: false,
+    });
+    clearInterval(this.intervalID);
+  }
+
+  clearGame = () => {
+    const gridCopy = [...this.state.grid];
+    for (let i = 0; i < gridCopy.length; i++) {
+      if (gridCopy[i]) {
+        gridCopy[i] = false;
+      }
+    }
+    this.setState({
+      grid: gridCopy,
+      generations: 0,
+    });
+    clearInterval(this.intervalID);
+  }
+
+  analyzeNeighbors = () => {
+    const grid = this.state.grid;
+    const gridCopy = [...this.state.grid];
+    for (let i = 0; i < gridCopy.length; i++) {
+      let count = 0;
+      if (grid[i + 1]) count++;
+      if (grid[i - 1]) count++;
+      if (grid[i - 40]) count++;
+      if (grid[i - 39]) count++;
+      if (grid[i - 41]) count++;
+      if (grid[i + 40]) count++;
+      if (grid[i + 39]) count++;
+      if (grid[i + 41]) count++;
+
+      if (grid[i] && (count < 2 || count > 3)) gridCopy[i] = false;
+      if (!grid[i] && count === 3) gridCopy[i] = true;
+    }
+    this.setState({
+      grid: gridCopy,
+      generations: this.state.generations + 1,
     });
   }
 
@@ -80,13 +126,13 @@ class App extends Component {
             grid={this.state.grid}
             selectCell={this.selectCell}
             gridSize={this.gridSize}
-            updateGenerations={this.updateGenerations}
-            start={this.state.start}
           />
           <Controls
             generations={this.state.generations}
             startGame={this.startGame}
             pauseGame={this.pauseGame}
+            clearGame={this.clearGame}
+            randomGame={this.randomCells}
           />
         </div>
       </MuiThemeProvider>

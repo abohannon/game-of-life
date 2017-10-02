@@ -19,7 +19,6 @@ class Grid extends Component {
   static propTypes = {
     grid: PropTypes.array.isRequired,
     gridSize: PropTypes.number.isRequired,
-    updateGenerations: PropTypes.func.isRequired,
     start: PropTypes.bool.isRequired,
     selectCell: PropTypes.func.isRequired,
   };
@@ -31,7 +30,6 @@ class Grid extends Component {
 
     const {
       gridSize,
-      updateGenerations,
       start,
       selectCell,
     } = this.props;
@@ -39,7 +37,7 @@ class Grid extends Component {
     const grid = [];
 
     let cellClass = '';
-    for (let i = 1; i <= gridSize; i += 1) {
+    for (let i = 0; i < gridSize; i += 1) {
       cellClass = this.props.grid[i] ? 'cell alive' : 'cell';
       grid.push(
         <GridItem
@@ -47,7 +45,6 @@ class Grid extends Component {
           key={i}
           index={i}
           trackCells={this.trackCells}
-          updateGenerations={updateGenerations}
           start={start}
           selectCell={selectCell}
         />,

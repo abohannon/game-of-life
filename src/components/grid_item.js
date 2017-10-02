@@ -16,8 +16,6 @@ const createGridItemStyles = () => ({
 class GridItem extends Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
-    // updateGenerations: PropTypes.func.isRequired,
-    // start: PropTypes.bool.isRequired,
     selectCell: PropTypes.func.isRequired,
     cellClass: PropTypes.string.isRequired,
   };

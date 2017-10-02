@@ -21,6 +21,8 @@ class Controls extends Component {
     generations: PropTypes.number.isRequired,
     startGame: PropTypes.func.isRequired,
     pauseGame: PropTypes.func.isRequired,
+    clearGame: PropTypes.func.isRequired,
+    randomGame: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -40,6 +42,8 @@ class Controls extends Component {
       generations,
       startGame,
       pauseGame,
+      clearGame,
+      randomGame,
     } = this.props;
 
     return (
@@ -47,7 +51,8 @@ class Controls extends Component {
         <div>
           <RaisedButton label="START" style={button} onClick={startGame} />
           <RaisedButton label="PAUSE" style={button} onClick={pauseGame} />
-          <RaisedButton label="RESET" style={button} />
+          <RaisedButton label="CLEAR" style={button} onClick={clearGame} />
+          <RaisedButton label="RANDOM" style={button} onClick={randomGame} />
         </div>
         <div>
           Generations: {generations}
